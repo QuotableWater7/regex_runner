@@ -17,9 +17,7 @@ function tokenBuilder(regexp) {
         this.output += char;
       }.bind(this));
 
-      _.each(this.output, function (token) {
-        this.tokens.push(new Token(token));
-      }.bind(this));
+      this.buildTokensFromOutput();
 
       return this.tokens;
     },
@@ -33,6 +31,14 @@ function tokenBuilder(regexp) {
       }.bind(this));
       this.tokens.push(new Token(last_part, { optional: true }));
       this.output = '';
+    },
+
+    buildTokensFromOutput: function () {
+      var self = this;
+
+      _.each(this.output, function (token) {
+        self.tokens.push(new Token(token));
+      });
     }
   };
 };
