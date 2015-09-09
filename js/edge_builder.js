@@ -2,10 +2,6 @@ var _ = require('underscore');
 var fsmsim = require('./fsmsim');
 var Token = require('./token');
 
-var special_chars = {
-  '?': true
-};
-
 function edgeBuilder(tokens) {
   var edges = {};
   var edge_index = 1;
