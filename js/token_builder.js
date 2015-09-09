@@ -1,7 +1,7 @@
 var Token = require('./token');
 var _ = require('underscore');
 
-module.exports = function (regexp) {
+function tokenBuilder(regexp) {
   var tokens = [];
   var output = '';
 
@@ -27,3 +27,5 @@ module.exports = function (regexp) {
 
   return tokens;
 };
+
+module.exports = tokenBuilder;
