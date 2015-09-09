@@ -8,14 +8,18 @@ function tokenBuilder(regexp) {
     output: '',
 
     getTokens: function () {
-      _.each(regexp, function (char) {
-        if (char === '?') {
-          this.buildOptionalToken();
-          return;
-        }
+      var self = this;
 
-        this.output += char;
-      }.bind(this));
+      _.each(regexp, function (char) {
+        switch (char) {
+        case '?':
+          self.buildOptionalToken();
+          break;
+        default:
+          self.output += char;
+          break;
+        }
+      });
 
       this.buildTokensFromOutput();
 
@@ -23,14 +27,17 @@ function tokenBuilder(regexp) {
     },
 
     buildOptionalToken: function () {
-      var first_part = this.output.slice(0, -1);
-      var last_part = this.output.slice(-1);
+      var self = this;
 
+      var first_part = this.output.slice(0, -1);
       _.each(first_part, function (token) {
-        this.tokens.push(new Token(token));
-      }.bind(this));
-      this.tokens.push(new Token(last_part, { optional: true }));
-      this.output = '';
+        self.tokens.push(new Token(token));
+      });
+
+      var last_part = this.output.slice(-1);
+      self.tokens.push(new Token(last_part, { optional: true }));
+
+      self.resetOutput();
     },
 
     buildTokensFromOutput: function () {
@@ -39,6 +46,10 @@ function tokenBuilder(regexp) {
       _.each(this.output, function (token) {
         self.tokens.push(new Token(token));
       });
+    },
+
+    resetOutput: function () {
+      this.output = '';
     }
   };
 };
