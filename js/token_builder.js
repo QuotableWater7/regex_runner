@@ -4,8 +4,7 @@ var _ = require('underscore');
 function tokenBuilder(regexp) {
   return {
     tokens: [],
-
-    output: '',
+    output: [],
 
     getTokens: function () {
       var self = this;
@@ -16,7 +15,7 @@ function tokenBuilder(regexp) {
           self.buildOptionalToken();
           break;
         default:
-          self.output += char;
+          self.output.push(char);
           break;
         }
       });
@@ -49,7 +48,7 @@ function tokenBuilder(regexp) {
     },
 
     resetOutput: function () {
-      this.output = '';
+      this.output = [];
     }
   };
 };
