@@ -1,9 +1,10 @@
 var _ = require('underscore');
 
 function fsmsim(string, current_node, edges, accepting_states) {
-  var next_node = edges[current_node + string[0]];
-  var epsilon_node = edges[current_node + 'epsilon'];
-  var state = [string, current_node, edges, accepting_states];
+  var edges_at_current = edges[current_node] || {};
+
+  var next_node = edges_at_current[string[0]];
+  var epsilon_node = edges_at_current.epsilon;
 
   if (!epsilon_node) {
     if (_.isEmpty(string)) {
